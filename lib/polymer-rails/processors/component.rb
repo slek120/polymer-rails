@@ -56,7 +56,8 @@ module Polymer
             return file_list.first unless file_list.blank?
           end
           components = Dir.glob("#{File.absolute_path file, File.dirname(@context.pathname)}*")
-          return components.blank? ? nil : components.first
+          return components.first unless components.blank?
+          raise StandardError, "Couldn't find file '#{file}' in '#{@context.pathname}'"
         end
 
         def find_asset(asset_path)
